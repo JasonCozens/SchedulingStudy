@@ -9,5 +9,7 @@ namespace Spike01_Tests
     interface IJobsGenerator
     {
         List<DateTime> Jobs { get; }
+
+        void AddJobs(int numberOfJobs);
     }
 }
