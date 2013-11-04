@@ -15,13 +15,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+from datetime import (
+    datetime,
+)
+
 class Job():
 
     Pending = 'Pending'
+    InProgress = 'In Progress'
+    Complete = 'Complete'
+
+    def __init__(self, startTime):
+        self.__state = Job.Pending
+        self.__lastTransitionTime = startTime
+
+    def Next(self, transitionTime):
+        self.__lastTransitionTime = transitionTime
+        self.__state = Job.InProgress
     
     @property
     def State(self):
-        return Job.Pending
+        return self.__state
+
+    def GetTransitionTime(self, state):
+        return self.__lastTransitionTime
+
+        
 
 print(__name__)
 

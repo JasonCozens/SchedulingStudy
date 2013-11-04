@@ -21,6 +21,10 @@ from unittest import (
     TestLoader,
     )
 
+from datetime import (
+    datetime,
+    )
+
 from scheduling import (
     Job,
     )
@@ -28,8 +32,17 @@ from scheduling import (
 class JobTests(TestCase):
 
     def test_new_Job(self):
-        job = Job()
+        jobStartTime = datetime(2020, 2, 1)
+        job = Job(jobStartTime)
         self.assertEqual(job.State, Job.Pending)
+        self.assertEqual(job.GetTransitionTime(Job.Pending), jobStartTime)
+
+    def test_Pending_next_InProgress(self):
+        job = Job(datetime(2020, 2, 1))
+        inProgressStart = datetime(2013, 12, 2)
+        job.Next(inProgressStart)
+        self.assertEqual(job.State, Job.InProgress)
+        self.assertEqual(job.GetTransitionTime(Job.InProgress), inProgressStart)
 
 def alltests():
     return TestSuite([
